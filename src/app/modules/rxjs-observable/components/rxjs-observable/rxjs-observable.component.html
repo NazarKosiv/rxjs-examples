@@ -1,0 +1,13 @@
+<section class="mat-buttons-row">
+  <button mat-raised-button color="primary" (click)="showSimpleObservableExample()">Simple Observable</button>
+  <button mat-raised-button color="primary" (click)="showMultyValueObservableExample()">
+    Multiple values observable
+  </button>
+  <button mat-raised-button color="primary" (click)="showErrorObservableExample()">Error Observable</button>
+  <button mat-raised-button color="primary" (click)="showHotObservableExample()">Hot Observable</button>
+  <button mat-raised-button color="primary" (click)="showColdObservableExample()">Cold Observable</button>
+  <button mat-raised-button (click)="clearView()">Clear</button>
+</section>
+<mat-list>
+  <mat-list-item *ngFor="let message of (messages$ | async)">{{ message }}</mat-list-item>
+</mat-list>

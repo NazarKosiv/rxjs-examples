@@ -1,0 +1,11 @@
+<nav mat-tab-nav-bar>
+  <a
+    mat-tab-link
+    *ngFor="let link of (navLinks$ | async)"
+    [routerLink]="link.path"
+    (click)="setActiveLink(link)"
+    [active]="isLinkActive(link, activeLink$ | async)"
+  >
+    {{ link.label }}
+  </a>
+</nav>
