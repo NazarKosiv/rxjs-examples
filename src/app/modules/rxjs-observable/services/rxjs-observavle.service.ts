@@ -87,9 +87,9 @@ export class RxjsObservavleService extends MessagesStorage {
 
   private subscribeToObservable(observable$: Observable<any>): void {
     observable$.subscribe(
-      (message: any) => this.addMessage(`${message}`, CUSTOM_MESSAGE_TYPES.NEXT),
-      (err: Error) => this.addMessage(err.message, CUSTOM_MESSAGE_TYPES.ERROR),
-      () => this.addMessage('observable completed', CUSTOM_MESSAGE_TYPES.COMPLETE)
+      (message: any) => this.addMessage(`next: ${message}`, CUSTOM_MESSAGE_TYPES.NEXT),
+      (err: Error) => this.addMessage(`error: ${err.message}`, CUSTOM_MESSAGE_TYPES.ERROR),
+      () => this.addMessage('complete: done!', CUSTOM_MESSAGE_TYPES.COMPLETE)
     );
   }
 

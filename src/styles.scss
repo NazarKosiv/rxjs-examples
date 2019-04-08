@@ -1,2 +1,10 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+.mat-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  > button {
+    margin: 10px;
+  }
+}
