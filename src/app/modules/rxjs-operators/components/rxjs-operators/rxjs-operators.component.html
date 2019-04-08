@@ -1,3 +1,19 @@
-<p>
-  rxjs-operators works!
-</p>
+<section class="mat-buttons-row">
+  <button mat-raised-button color="primary" (click)="showMapExample()">Map</button>
+  <button mat-raised-button color="primary" (click)="showFilterExample()">Filter</button>
+  <button mat-raised-button color="primary" (click)="showFilterRequestExample()">Filter Requests</button>
+  <button mat-raised-button color="primary" (click)="showFilterRequestExample(true)">
+    Filter out only error requests
+  </button>
+  <button mat-raised-button color="primary" (click)="showForkJoinExample()">Fork Join</button>
+  <button mat-raised-button color="primary" (click)="showFirstExample()">First</button>
+  <button mat-raised-button color="primary" (click)="showTakeExample()">Take</button>
+  <button mat-raised-button color="primary" (click)="showCombineLatestAndFromEventExample()">
+    combineLatest & fromEvent
+  </button>
+  <button mat-raised-button color="primary" (click)="showMergeMapExample()">mergeMap</button>
+  <button mat-raised-button (click)="clearView()">Clear</button>
+</section>
+<mat-list>
+  <mat-list-item *ngFor="let message of (messages$ | async)">{{ message }}</mat-list-item>
+</mat-list>

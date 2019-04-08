@@ -7,7 +7,7 @@ const routes: Routes = [
   ...navigationLinks,
   {
     path: '**',
-    redirectTo: '/intro'
+    redirectTo: '/observable'
   }
 ];
 

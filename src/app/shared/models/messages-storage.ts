@@ -25,13 +25,13 @@ export class MessagesStorage {
   private getEmoji(messageType: customMessageType): string {
     switch (messageType) {
       case 'next':
-        return '📘';
+        return '🔘';
       case 'error':
-        return '📙';
+        return '🔴';
       case 'complete':
-        return '📗';
+        return '✔️';
       default:
-        return '📘';
+        return '🔘';
     }
   }
 }
