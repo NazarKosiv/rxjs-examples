@@ -18,12 +18,24 @@ export class RxjsOperatorsComponent implements OnInit {
     this.operatorsService.createMapExample();
   }
 
+  showOfExample(): void {
+    this.operatorsService.createOfExample();
+  }
+
+  showFromExample(): void {
+    this.operatorsService.createFromExample();
+  }
+
   showFilterExample(): void {
     this.operatorsService.createFilterExample();
   }
 
   showFilterRequestExample(showErrors = false): void {
     this.operatorsService.createFilterRequestExample(showErrors);
+  }
+
+  showConcatExample(): void {
+    this.operatorsService.createConcatExample();
   }
 
   showForkJoinExample(): void {
@@ -42,12 +54,15 @@ export class RxjsOperatorsComponent implements OnInit {
     this.operatorsService.createCombineLatestAndFromEventExample();
   }
 
-  showMergeMapExample(): void {
-    this.operatorsService.createMergeMapExample();
+  showConcatMapExample(): void {
+    this.operatorsService.createConcatMapExample();
   }
 
   clearView(): void {
     this.operatorsService.clearMessages();
+  }
+
+  unsubscribe(): void {
     this.operatorsService.destroySubscriptions();
   }
 }

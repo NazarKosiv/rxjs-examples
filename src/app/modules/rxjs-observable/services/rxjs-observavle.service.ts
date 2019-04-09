@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, Subscriber, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subscriber, Subject, of } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
 
 import { MessagesStorage } from 'src/app/shared/models/messages-storage';
 import { CUSTOM_MESSAGE_TYPES } from 'src/app/shared/constants/message-types.constants';
@@ -16,7 +16,7 @@ export class RxjsObservavleService extends MessagesStorage {
 
   createSimpleObservableExample(): void {
     const obs$: Observable<string> = new Observable((observer: Subscriber<string>) => {
-      observer.next('Hey from observable mate! :D');
+      observer.next('Hey from an observable mate! :D');
       observer.complete();
     });
 
@@ -25,10 +25,14 @@ export class RxjsObservavleService extends MessagesStorage {
 
   createErrorObservableExample(): void {
     const obs$: Observable<string> = new Observable((observer: Subscriber<string>) => {
-      observer.next('Hey from observable mate! :D');
+      observer.next('Hey from observable an mate! :D');
       observer.error(new Error('oopsie!'));
       observer.complete();
-    });
+    }).pipe(
+      catchError((error: Error) => {
+        return of(`an error occured: ${error.message}`);
+      })
+    );
 
     this.subscribeToObservable(obs$);
   }
