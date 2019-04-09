@@ -1,3 +1,8 @@
-<p>
-  rxjs-scheduler works!
-</p>
+<section class="mat-buttons-row">
+  <button mat-raised-button color="primary" (click)="showSyncExample()">Sync</button>
+  <button mat-raised-button color="primary" (click)="showAsyncExample()">Async</button>
+</section>
+<mat-list>
+  <button *ngIf="(messages$ | async).length" mat-raised-button (click)="clearMessages()">Clear Messages</button>
+  <mat-list-item *ngFor="let message of (messages$ | async)">{{ message }}</mat-list-item>
+</mat-list>
