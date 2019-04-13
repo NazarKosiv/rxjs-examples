@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { navigationLinks } from '../constants/navigation.constants';
 import { INavigationLink } from '../models/navigation-link.models';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { NavigationEnd, Router, Event } from '@angular/router';
+import { NavigationEnd, Router, Event, RouterEvent } from '@angular/router';
+import { filter, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -29,16 +30,16 @@ export class NavigationStorageService {
   }
 
   initActiveLink(): void {
-    const routerEventsSubscr: Subscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd),
+      first()
+    ).subscribe((event: RouterEvent) => {
         const activeLink = this.navLinks.find((link: INavigationLink) => event.url.toLowerCase().includes(link.path.toLowerCase()));
         if (activeLink) {
           this.setActiveLink(activeLink);
         } else {
           this.setActiveLink(this.navLinks[0]);
         }
-        routerEventsSubscr.unsubscribe();
-      }
-    });
+      });
   }
 }
