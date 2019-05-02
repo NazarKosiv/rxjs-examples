@@ -20,5 +20,10 @@ export const navigationLinks: Array<INavigationLink> = [
     path: 'scheduler',
     label: 'Scheduler',
     loadChildren: '../rxjs-scheduler/rxjs-scheduler.module#RxjsSchedulerModule'
+  },
+  {
+    path: 'dynamic-forms',
+    label: 'Dynamic forms',
+    loadChildren: '../rxjs-dynamic-forms/rxjs-dynamic-forms.module#RxjsDynamicFormsModule'
   }
 ];
