@@ -30,7 +30,7 @@ export class DynamicFormComponent implements OnInit {
     console.log(value);
   }
 
-  getCheckedItems(citiesGroup: IDynamicFormField, value: any): IGenericObject<string> {
+  private getCheckedItems(citiesGroup: IDynamicFormField, value: any): IGenericObject<string> {
     return (value[citiesGroup.name] as Array<boolean>).reduce(
       (acc, cur, i) => {
         if (cur) {
