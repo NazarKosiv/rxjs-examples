@@ -8,16 +8,17 @@ import { DynamicFormDateComponent } from '../dynamic-form-date/dynamic-form-date
 import { DynamicFormRadiobuttonComponent } from '../dynamic-form-radiobutton/dynamic-form-radiobutton.component';
 import { DynamicFormCheckboxComponent } from '../dynamic-form-checkbox/dynamic-form-checkbox.component';
 import { DynamicFormArrayCheckboxComponent } from '../dynamic-form-array-checkbox/dynamic-form-array-checkbox.component';
+import { DYNAMIC_FORM_FIELD_TYPES } from '../../constants/rxjs-dynamic-forms.constants';
 
-const componentMapper = {
-  input: DynamicFormInputComponent,
-  button: DynamicFormButtonComponent,
-  select: DynamicFormSelectComponent,
-  date: DynamicFormDateComponent,
-  radiobutton: DynamicFormRadiobuttonComponent,
-  checkbox: DynamicFormCheckboxComponent,
-  checkboxArray: DynamicFormArrayCheckboxComponent
-};
+const componentMapper: Map<string, any> = new Map<string, any>([
+  [DYNAMIC_FORM_FIELD_TYPES.INPUT, DynamicFormInputComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.BUTTON, DynamicFormButtonComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.SELECT, DynamicFormSelectComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.DATE, DynamicFormDateComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.RADIO, DynamicFormRadiobuttonComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.CHECKBOX, DynamicFormCheckboxComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY, DynamicFormArrayCheckboxComponent]
+]);
 
 @Directive({
   selector: '[appDynamicFormField]'
@@ -30,7 +31,7 @@ export class DynamicFormFieldDirective implements OnInit {
   constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) {}
 
   ngOnInit() {
-    const factory = this.resolver.resolveComponentFactory(componentMapper[this.field.type]);
+    const factory = this.resolver.resolveComponentFactory(componentMapper.get(this.field.type));
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.field = this.field;
     this.componentRef.instance.group = this.group;
