@@ -1,3 +1,10 @@
-<p>
-  dynamic-form-array-checkbox works!
-</p>
+<div class="demo-full-width margin-top" [formGroup]="group">
+  <section [formArrayName]="field.name">
+    <mat-checkbox *ngFor="let checkbox of group.controls[field.name].controls; index as i" [formControlName]="i">
+      {{ field.formArrayFields[i].label }}
+    </mat-checkbox>
+  </section>
+  <ng-container *ngFor="let validator of field.validators" ngProjectAs="mat-error">
+    <mat-error *ngIf="group.get(field.name).hasError(validator.name)">{{ validator.message }}</mat-error>
+  </ng-container>
+</div>

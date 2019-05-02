@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { IDynamicFormField, IControl, IValidator } from '../models/dynamic-form.models';
+import { DYNAMIC_FORM_FIELD_TYPES } from '../constants/rxjs-dynamic-forms.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { IDynamicFormField, IControl, IValidator } from '../models/dynamic-form.
 export class DynamicFormService {
   constructor() {}
 
-  generate(formFields: Array<IDynamicFormField>): FormGroup {
+  createFormGroup(formFields: Array<IDynamicFormField>): FormGroup {
     const controls: IControl = formFields.reduce(
       (acc: IControl, cur: IDynamicFormField) => {
         if (cur.name) {
@@ -19,13 +20,18 @@ export class DynamicFormService {
       },
       {} as IControl
     );
-    console.log(controls);
 
     return new FormGroup(controls);
   }
 
-  private getDefaultValue(fieldConfig: IDynamicFormField): string | null {
-    return fieldConfig.value || null;
+  private getDefaultValue(fieldConfig: IDynamicFormField): number | string | boolean | null {
+    if (fieldConfig.value) {
+      return fieldConfig.value;
+    } else if (fieldConfig.value === false) {
+      return false;
+    } else {
+      return null;
+    }
   }
 
   private getValidators(fieldConfig: IDynamicFormField): Array<any> {
@@ -36,8 +42,8 @@ export class DynamicFormService {
   }
 
   private createFormControl(fieldConfig: IDynamicFormField): AbstractControl {
-    if (fieldConfig.isFormArray) {
-      const formArray: FormArray = new FormArray([]);
+    if (fieldConfig.type === DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY) {
+      const formArray: FormArray = new FormArray([], this.getValidators(fieldConfig));
       fieldConfig.formArrayFields.forEach((formField: IDynamicFormField) =>
         formArray.push(this.createFormControl(formField))
       );

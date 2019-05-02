@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import { dynamicFormConfig } from '../../constants/rxjs-dynamic-forms.constants';
-import { IDynamicFormField } from '../../models/dynamic-form.models';
+import { IDynamicFormField, IGenericObject } from '../../models/dynamic-form.models';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -16,10 +16,31 @@ export class DynamicFormComponent implements OnInit {
   constructor(private dynamicFormService: DynamicFormService) {}
 
   ngOnInit() {
-    this.dynamicForm = this.dynamicFormService.generate(this.dynamicFormFields);
+    this.dynamicForm = this.dynamicFormService.createFormGroup(this.dynamicFormFields);
   }
 
   onSubmit() {
-    console.log(this.dynamicForm.value);
+    const value: any = this.dynamicForm.value;
+    const citiesGroup: IDynamicFormField = { ...this.dynamicFormFields.find((f: IDynamicFormField) => f.isFormArray) };
+
+    if (citiesGroup) {
+      value[citiesGroup.name] = this.getCheckedItems(citiesGroup, value);
+    }
+
+    console.log(value);
+  }
+
+  getCheckedItems(citiesGroup: IDynamicFormField, value: any): IGenericObject<string> {
+    return (value[citiesGroup.name] as Array<boolean>).reduce(
+      (acc, cur, i) => {
+        if (cur) {
+          const city: IDynamicFormField = citiesGroup.formArrayFields[i];
+
+          acc[city.name] = city.label;
+        }
+        return acc;
+      },
+      {} as IGenericObject<string>
+    );
   }
 }

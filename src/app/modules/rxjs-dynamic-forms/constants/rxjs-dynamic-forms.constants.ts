@@ -1,9 +1,20 @@
 import { Validators } from '@angular/forms';
 import { IDynamicFormField } from '../models/dynamic-form.models';
+import { minSelectedCheckboxes } from '../validators/min-selected-checkboxes.validator';
+
+export enum DYNAMIC_FORM_FIELD_TYPES {
+  INPUT = 'input',
+  RADIO = 'radiobutton',
+  DATE = 'date',
+  SELECT = 'select',
+  CHECKBOX = 'checkbox',
+  CHECKBOX_ARRAY = 'checkboxArray',
+  BUTTON = 'button'
+}
 
 export const dynamicFormConfig: Array<IDynamicFormField> = [
   {
-    type: 'input',
+    type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Username',
     inputType: 'text',
     name: 'name',
@@ -21,7 +32,7 @@ export const dynamicFormConfig: Array<IDynamicFormField> = [
     ]
   },
   {
-    type: 'input',
+    type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Email Address',
     inputType: 'email',
     name: 'email',
@@ -39,7 +50,7 @@ export const dynamicFormConfig: Array<IDynamicFormField> = [
     ]
   },
   {
-    type: 'input',
+    type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Password',
     inputType: 'password',
     name: 'password',
@@ -52,7 +63,7 @@ export const dynamicFormConfig: Array<IDynamicFormField> = [
     ]
   },
   {
-    type: 'radiobutton',
+    type: DYNAMIC_FORM_FIELD_TYPES.RADIO,
     label: 'Gender',
     name: 'gender',
     options: ['Male', 'Female'],
@@ -71,7 +82,7 @@ export const dynamicFormConfig: Array<IDynamicFormField> = [
     ]
   },
   {
-    type: 'select',
+    type: DYNAMIC_FORM_FIELD_TYPES.SELECT,
     label: 'Country',
     name: 'country',
     value: 'UK',
@@ -84,39 +95,42 @@ export const dynamicFormConfig: Array<IDynamicFormField> = [
     value: true
   },
   {
-    type: 'checkboxArray',
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY,
     label: 'Pick Cities',
     name: 'cities',
     isFormArray: true,
+    validators: [
+      { name: 'minChecked', validator: minSelectedCheckboxes(1), message: 'At least one city must be checked!' }
+    ],
     formArrayFields: [
       {
         value: false,
-        type: 'checkbox',
+        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
         name: 'if',
         label: 'Ivano-Frankivsk'
       },
       {
         value: false,
-        type: 'checkbox',
+        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
         name: 'lv',
         label: 'Lviv'
       },
       {
         value: false,
-        type: 'checkbox',
+        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
         name: 'pg',
         label: 'Prague'
       },
       {
         value: false,
-        type: 'checkbox',
+        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
         name: 'ld',
         label: 'London'
       }
     ]
   },
   {
-    type: 'button',
+    type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
     label: 'Save'
   }
 ];
