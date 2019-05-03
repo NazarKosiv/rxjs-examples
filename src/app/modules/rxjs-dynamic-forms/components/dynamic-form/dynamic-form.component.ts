@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DynamicFormService } from '../../services/dynamic-form.service';
-import { dynamicFormConfig } from '../../constants/rxjs-dynamic-forms.constants';
+import {
+  registrationFormConfig,
+  surveyFormConfig,
+  favoriteCitiesFormConfig
+} from '../../constants/rxjs-dynamic-forms.constants';
 import { IDynamicFormField, IGenericObject } from '../../models/dynamic-form.models';
 
 @Component({
@@ -11,7 +15,7 @@ import { IDynamicFormField, IGenericObject } from '../../models/dynamic-form.mod
 })
 export class DynamicFormComponent implements OnInit {
   dynamicForm: FormGroup;
-  dynamicFormFields: Array<IDynamicFormField> = dynamicFormConfig;
+  dynamicFormFields: Array<IDynamicFormField> = registrationFormConfig;
 
   constructor(private dynamicFormService: DynamicFormService) {}
 
@@ -20,12 +24,17 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const value: any = this.dynamicForm.value;
-    const citiesGroup: IDynamicFormField = { ...this.dynamicFormFields.find((f: IDynamicFormField) => f.isFormArray) };
+    let value: any = this.dynamicForm.value;
+    const checkboxArrayGroups: Array<IDynamicFormField> = this.dynamicFormFields.filter(
+      (f: IDynamicFormField) => f.isFormArray
+    );
 
-    if (citiesGroup) {
-      value[citiesGroup.name] = this.getCheckedItems(citiesGroup, value);
-    }
+    checkboxArrayGroups.forEach((checkboxArrayGroup: IDynamicFormField) => {
+      value = {
+        ...value,
+        [checkboxArrayGroup.name]: this.getCheckedItems(checkboxArrayGroup, value)
+      };
+    });
 
     console.log(value);
   }
