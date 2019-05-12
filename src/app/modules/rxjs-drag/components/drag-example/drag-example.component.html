@@ -1,0 +1,42 @@
+<section class="d-flex flex-column justify-content-center align-items-center">
+  <div style="width: 800px; height: 600px; border: 1px solid #c0c0c0">
+    <div cdkDrag style="display: inline-block;">
+      <img 
+        src="assets/map-example.png"
+        style="border: 1px solid #c0c0c0"
+        [@photoState]="position">
+    </div>
+  </div>
+  <div style="width: 800px; height: 600px; border: 1px solid #c0c0c0">
+    <div appDragNDrop style="display: inline-block;">
+        <img
+          src="assets/map-example.png"
+          style="border: 1px solid #c0c0c0"
+          [@secondPhotoState]="secondPosition">
+    </div>
+  </div>
+  <div>
+    <div>First image controllers</div>
+    <div class="d-flex justify-content-center w-100">
+      <button mat-raised-button
+        (click)="scale()"
+        style="margin: 0 10px; cursor: pointer;">scale</button>
+      <button mat-raised-button
+        (click)="rotate()"
+        style="margin: 0 10px; cursor: pointer;">rotate</button>
+    </div>
+  </div>
+  <div>
+    <div>Second image controllers</div>
+    <div class="d-flex justify-content-center w-100">
+      <button mat-raised-button
+        (click)="secondScale()"
+        style="margin: 0 10px; cursor: pointer;">scale</button>
+      <button mat-raised-button
+        (click)="secondRotate()"
+        style="margin: 0 10px; cursor: pointer;">rotate</button>
+    </div>
+  </div>
+
+</section>
+
