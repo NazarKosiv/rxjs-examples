@@ -23,10 +23,10 @@ import { transition, animate, keyframes, style, trigger, state } from '@angular/
         transform: 'scale(1.5)',
       })),
       state('rotate',   style({
-        transform: 'rotateY(180deg)',
+        transform: 'rotate(90deg)',
       })),
       state('rotate-scale',   style({
-        transform: 'scale(1.5) rotateY(180deg)',
+        transform: 'scale(1.5) rotate(90deg)',
       })),
       transition('* <=> *', animate('400ms ease-in-out')),
     ])

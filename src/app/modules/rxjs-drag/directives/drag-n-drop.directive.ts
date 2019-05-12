@@ -2,6 +2,7 @@ import { Directive, ElementRef, Renderer2, OnInit, OnDestroy, Input } from '@ang
 import { Observable, fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DragNDropService } from 'src/app/shared/services/drag-n-drop.service';
+import { ICoordinates } from './models/coordinates.model';
 
 @Directive({
   selector: '[appDragNDrop]'
@@ -15,8 +16,12 @@ export class DragNDropDirective implements OnInit, OnDestroy {
   private mouseMove$: Observable<MouseEvent>;
   private onDestroy$: Subject<void> = new Subject<void>();
   private dragStarted = false;
-  private initialTranslateX: number = undefined;
-  private initialTranslateY: number = undefined;
+  private initialDragElementX: number = undefined;
+  private initialDragElementY: number = undefined;
+  private prevPageX: number;
+  private prevPageY: number;
+  private previousShiftX = 0;
+  private previousShiftY = 0;
 
   constructor(
     private elementRef: ElementRef,
@@ -66,7 +71,8 @@ export class DragNDropDirective implements OnInit, OnDestroy {
         }
 
         this.dragStarted = true;
-        this.initXnYIfNeeded(event);
+        this.setPrevPageCoords(event);
+        this.initDragElementCoordsIfUndefined(event);
       });
 
     this.mouseMove$
@@ -78,8 +84,12 @@ export class DragNDropDirective implements OnInit, OnDestroy {
           return;
         }
 
-        const translateX = event.pageX - this.initialTranslateX;
-        const translateY = event.pageY - this.initialTranslateY;
+        const currentPageX: number = event.pageX;
+        const currentPageY: number = event.pageY;
+        const shiftX: number = currentPageX - this.prevPageX;
+        const shiftY: number = currentPageY - this.prevPageY;
+        const translateX: number = this.previousShiftX + shiftX;
+        const translateY: number = this.previousShiftY + shiftY;
 
         this.drag(translateX, translateY);
       });
@@ -88,8 +98,15 @@ export class DragNDropDirective implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.onDestroy$)
       )
-      .subscribe(() => {
+      .subscribe((event: MouseEvent) => {
+        const shiftedDragElementCoords: ICoordinates = this.getShiftedCoords(event);
+        const currentPageX: number = event.pageX;
+        const currentPageY: number = event.pageY;
+        const dragElementX: number = currentPageX - shiftedDragElementCoords.x;
+        const dragElementY: number = currentPageY - shiftedDragElementCoords.y;
+
         this.dragStarted = false;
+        this.setPrevShiftCoords(dragElementX, dragElementY);
       });
   }
 
@@ -97,11 +114,36 @@ export class DragNDropDirective implements OnInit, OnDestroy {
     this.renderer.setStyle(this.elementRef.nativeElement, 'transform', `translate3d(${translateX}px,${translateY}px,${0}px)`);
   }
 
-  private initXnYIfNeeded(event: MouseEvent): void {
-    if (this.initialTranslateX === undefined && this.initialTranslateY === undefined) {
-      this.initialTranslateX = event.pageX;
-      this.initialTranslateY = event.pageY;
+  private setPrevPageCoords(event: MouseEvent): void {
+    this.prevPageY = event.pageY;
+    this.prevPageX = event.pageX;
+  }
+
+  private setPrevShiftCoords(dragElementX: number, dragElementY: number): void {
+    this.previousShiftX = dragElementX - this.initialDragElementX;
+    this.previousShiftY = dragElementY - this.initialDragElementY;
+  }
+
+  private initDragElementCoordsIfUndefined(event: MouseEvent): void {
+    if (this.initialDragElementX === undefined && this.initialDragElementY === undefined) {
+      const shiftedDragElementCoords: ICoordinates = this.getShiftedCoords(event);
+
+      this.initialDragElementX = event.pageX - shiftedDragElementCoords.x;
+      this.initialDragElementY = event.pageY - shiftedDragElementCoords.y;
     }
+  }
+
+  private getShiftedCoords(event: MouseEvent): ICoordinates {
+    const scrollTop: number = window.pageYOffset;
+    const scrollLeft: number = window.pageXOffset;
+    const dragElementCoords: ClientRect = (this.elementRef.nativeElement as HTMLElement).getBoundingClientRect();
+    const shiftX: number = event.pageX - (dragElementCoords.left + scrollLeft);
+    const shiftY: number = event.pageY - (dragElementCoords.top + scrollTop);
+
+    return {
+      x: shiftX,
+      y: shiftY
+    };
   }
 
   private isLeftClick(event: MouseEvent): boolean {
