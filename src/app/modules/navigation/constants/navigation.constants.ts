@@ -25,5 +25,10 @@ export const navigationLinks: Array<INavigationLink> = [
     path: 'dynamic-forms',
     label: 'Dynamic forms',
     loadChildren: '../rxjs-dynamic-forms/rxjs-dynamic-forms.module#RxjsDynamicFormsModule'
+  },
+  {
+    path: 'rxjs-drag',
+    label: `drag 'n' drop`,
+    loadChildren: '../rxjs-drag/rxjs-drag.module#RxjsDragModule'
   }
 ];
