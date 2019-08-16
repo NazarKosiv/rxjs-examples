@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicFormWrapperComponent } from './components/dynamic-form-wrapper/dynamic-form-wrapper.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DynamicFormComponent
+    component: DynamicFormWrapperComponent
   }
 ];
 

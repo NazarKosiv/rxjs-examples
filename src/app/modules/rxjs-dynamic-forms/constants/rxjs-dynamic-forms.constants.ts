@@ -7,6 +7,7 @@ import { DynamicFormArray } from '../models/dynamic-form-array.model';
 import { DynamicFormButton } from '../models/dynamic-form-button.model';
 import { DynamicFormGroup, IDynamicFormGroup } from '../models/dynamic-form-group.model';
 import { DynamicFormInput } from '../models/dynamic-form-input.model';
+import { DynamicFormSelect } from '../models/dynamic-form-select.model';
 
 export enum DYNAMIC_FORM_FIELD_TYPES {
   INPUT = 'input',
@@ -23,6 +24,13 @@ export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup(
   name: null,
   type: DYNAMIC_FORM_FIELD_TYPES.GROUP,
   controls: [
+    new DynamicFormSelect({
+      type: DYNAMIC_FORM_FIELD_TYPES.SELECT,
+      label: 'Country',
+      name: 'country',
+      value: 'Ukraine',
+      options: ['Ukraine', 'UK', 'US']
+    }),
     new DynamicFormArray({
       type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY,
       label: 'Pick Cities',

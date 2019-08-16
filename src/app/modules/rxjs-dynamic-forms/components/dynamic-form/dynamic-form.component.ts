@@ -1,13 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DynamicFormService } from '../../services/dynamic-form.service';
-import {
-  registrationFormConfig,
-  surveyFormConfig,
-  favoriteCitiesFormConfig
-} from '../../constants/rxjs-dynamic-forms.constants';
+
 import { IDynamicFormControlField, IGenericObject } from '../../models/dynamic-form.models';
-import { IDynamicFormControl } from '../../models/dynamic-form-control.model';
 import { IDynamicFormGroup } from '../../models/dynamic-form-group.model';
 
 @Component({
@@ -16,12 +10,12 @@ import { IDynamicFormGroup } from '../../models/dynamic-form-group.model';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
-  formGroup: FormGroup;
-  dynamicForm: IDynamicFormGroup = favoriteCitiesFormConfig;
+  private formGroup: FormGroup;
+  @Input() public dynamicForm: IDynamicFormGroup;
   @Output() public submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() public formCreated: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  constructor(private dynamicFormService: DynamicFormService) {}
+  constructor() {}
 
   ngOnInit() {
     this.formGroup = this.dynamicForm.create();

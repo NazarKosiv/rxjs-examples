@@ -14,6 +14,7 @@ import { DynamicFormArrayCheckboxComponent } from './components/dynamic-form-arr
 import { DynamicFormFieldDirective } from './components/dynamic-form-field/dynamic-form-field.directive';
 import { MaterialModule } from '../material/material.module';
 import { DynamicFormGroupComponent } from './components/dynamic-form-group/dynamic-form-group.component';
+import { DynamicFormWrapperComponent } from './components/dynamic-form-wrapper/dynamic-form-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DynamicFormGroupComponent } from './components/dynamic-form-group/dynam
     DynamicFormSelectComponent,
     DynamicFormArrayCheckboxComponent,
     DynamicFormFieldDirective,
-    DynamicFormGroupComponent
+    DynamicFormGroupComponent,
+    DynamicFormWrapperComponent
   ],
   imports: [CommonModule, RxjsDynamicFormsRoutingModule, ReactiveFormsModule, MaterialModule],
   entryComponents: [
