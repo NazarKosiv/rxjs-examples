@@ -1,5 +1,5 @@
 import { Directive, Input, ComponentFactoryResolver, ViewContainerRef, OnInit, ComponentRef } from '@angular/core';
-import { IDynamicFormField } from '../../models/dynamic-form.models';
+import { IDynamicFormControlField } from '../../models/dynamic-form.models';
 import { FormGroup } from '@angular/forms';
 import { DynamicFormInputComponent } from '../dynamic-form-input/dynamic-form-input.component';
 import { DynamicFormButtonComponent } from '../dynamic-form-button/dynamic-form-button.component';
@@ -9,6 +9,7 @@ import { DynamicFormRadiobuttonComponent } from '../dynamic-form-radiobutton/dyn
 import { DynamicFormCheckboxComponent } from '../dynamic-form-checkbox/dynamic-form-checkbox.component';
 import { DynamicFormArrayCheckboxComponent } from '../dynamic-form-array-checkbox/dynamic-form-array-checkbox.component';
 import { DYNAMIC_FORM_FIELD_TYPES } from '../../constants/rxjs-dynamic-forms.constants';
+import { DynamicFormGroupComponent } from '../dynamic-form-group/dynamic-form-group.component';
 
 const componentMapper: Map<string, any> = new Map<string, any>([
   [DYNAMIC_FORM_FIELD_TYPES.INPUT, DynamicFormInputComponent],
@@ -17,14 +18,15 @@ const componentMapper: Map<string, any> = new Map<string, any>([
   [DYNAMIC_FORM_FIELD_TYPES.DATE, DynamicFormDateComponent],
   [DYNAMIC_FORM_FIELD_TYPES.RADIO, DynamicFormRadiobuttonComponent],
   [DYNAMIC_FORM_FIELD_TYPES.CHECKBOX, DynamicFormCheckboxComponent],
-  [DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY, DynamicFormArrayCheckboxComponent]
+  [DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY, DynamicFormArrayCheckboxComponent],
+  [DYNAMIC_FORM_FIELD_TYPES.GROUP, DynamicFormGroupComponent]
 ]);
 
 @Directive({
   selector: '[appDynamicFormField]'
 })
 export class DynamicFormFieldDirective implements OnInit {
-  @Input() field: IDynamicFormField;
+  @Input() field: IDynamicFormControlField;
   @Input() group: FormGroup;
   private componentRef: ComponentRef<any>;
 

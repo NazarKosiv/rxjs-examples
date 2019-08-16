@@ -1,6 +1,12 @@
 import { Validators } from '@angular/forms';
-import { IDynamicFormField } from '../models/dynamic-form.models';
+import { IDynamicFormControlField } from '../models/dynamic-form.models';
 import { minSelectedCheckboxes } from '../validators/min-selected-checkboxes.validator';
+import { IDynamicFormControl } from '../models/dynamic-form-control.model';
+import { DynamicFormCheckbox } from '../models/dynamic-form-checkbox.model';
+import { DynamicFormArray } from '../models/dynamic-form-array.model';
+import { DynamicFormButton } from '../models/dynamic-form-button.model';
+import { DynamicFormGroup, IDynamicFormGroup } from '../models/dynamic-form-group.model';
+import { DynamicFormInput } from '../models/dynamic-form-input.model';
 
 export enum DYNAMIC_FORM_FIELD_TYPES {
   INPUT = 'input',
@@ -9,52 +15,97 @@ export enum DYNAMIC_FORM_FIELD_TYPES {
   SELECT = 'select',
   CHECKBOX = 'checkbox',
   CHECKBOX_ARRAY = 'checkboxArray',
-  BUTTON = 'button'
+  BUTTON = 'button',
+  GROUP = 'group'
 }
 
-export const favoriteCitiesFormConfig: Array<IDynamicFormField> = [
-  {
-    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY,
-    label: 'Pick Cities',
-    name: 'cities',
-    isFormArray: true,
-    validators: [
-      { name: 'minChecked', validator: minSelectedCheckboxes(1), message: 'At least one city must be checked!' }
-    ],
-    formArrayFields: [
-      {
-        value: false,
-        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-        name: 'if',
-        label: 'Ivano-Frankivsk'
-      },
-      {
-        value: false,
-        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-        name: 'lv',
-        label: 'Lviv'
-      },
-      {
-        value: false,
-        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-        name: 'pg',
-        label: 'Prague'
-      },
-      {
-        value: false,
-        type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-        name: 'ld',
-        label: 'London'
-      }
-    ]
-  },
-  {
-    type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
-    label: 'Save'
-  }
-];
+export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup({
+  name: null,
+  type: DYNAMIC_FORM_FIELD_TYPES.GROUP,
+  controls: [
+    new DynamicFormArray({
+      type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY,
+      label: 'Pick Cities',
+      name: 'cities',
+      validators: [
+        { name: 'minChecked', validator: minSelectedCheckboxes(1), message: 'At least one city must be checked!' }
+      ],
+      controls: [
+        new DynamicFormCheckbox({
+          value: false,
+          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+          name: 'if',
+          label: 'Ivano-Frankivsk'
+        }),
+        new DynamicFormCheckbox({
+          value: false,
+          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+          name: 'lv',
+          label: 'Lviv'
+        }),
+        new DynamicFormCheckbox({
+          value: false,
+          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+          name: 'pg',
+          label: 'Prague'
+        }),
+        new DynamicFormCheckbox({
+          value: false,
+          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+          name: 'ld',
+          label: 'London'
+        })
+      ]
+    }),
+    new DynamicFormInput({
+      type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
+      label: 'Email Address',
+      inputType: 'email',
+      name: 'email',
+      validators: [
+        {
+          name: 'required',
+          validator: Validators.required,
+          message: 'Email Required'
+        },
+        {
+          name: 'pattern',
+          validator: Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+          message: 'Invalid email'
+        }
+      ]
+    }),
+    new DynamicFormGroup({
+      name: 'userform',
+      type: DYNAMIC_FORM_FIELD_TYPES.GROUP,
+      controls: [
+        new DynamicFormInput({
+          type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
+          name: 'name',
+          label: 'name',
+          validators: [
+            {
+              name: 'required',
+              validator: Validators.required,
+              message: 'Field is required'
+            },
+            {
+              name: 'minlength',
+              validator: Validators.minLength(2),
+              message: 'At least 2 symbols long!'
+            },
+          ]
+        })
+      ]
+    }),
+    new DynamicFormButton({
+      type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
+      label: 'Save'
+    })
+  ]
+});
 
-export const surveyFormConfig: Array<IDynamicFormField> = [
+export const surveyFormConfig: Array<IDynamicFormControlField> = [
   {
     type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Username',
@@ -140,7 +191,7 @@ export const surveyFormConfig: Array<IDynamicFormField> = [
   }
 ];
 
-export const registrationFormConfig: Array<IDynamicFormField> = [
+export const registrationFormConfig: Array<IDynamicFormControlField> = [
   {
     type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Username',

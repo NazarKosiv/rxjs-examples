@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IDynamicFormField } from '../../models/dynamic-form.models';
+import { IDynamicFormControlField } from '../../models/dynamic-form.models';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,11 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./dynamic-form-array-checkbox.component.scss']
 })
 export class DynamicFormArrayCheckboxComponent implements OnInit {
-  field: IDynamicFormField;
+  field: IDynamicFormControlField;
   group: FormGroup;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }
