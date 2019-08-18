@@ -1,10 +1,13 @@
-<div class="demo-full-width margin-top" [formGroup]="group">
-  <section [formArrayName]="field.name">
-    <mat-checkbox *ngFor="let checkbox of group.controls[field.name].controls; index as i" [formControlName]="i">
-      {{ field.controls[i].label }}
-    </mat-checkbox>
-  </section>
-  <ng-container *ngFor="let validator of field.validators" ngProjectAs="mat-error">
-    <mat-error *ngIf="group.get(field.name).hasError(validator.name)">{{ validator.message }}</mat-error>
-  </ng-container>
-</div>
+<ng-container *ngIf="field$ | async as fld">
+  <div class="demo-full-width margin-top" [formGroup]="group">
+    <section [formArrayName]="fld.name">
+      <mat-checkbox *ngFor="let checkbox of group.controls[fld.name].controls; index as i" [formControlName]="i">
+        {{ fld.controls[i].label }}
+      </mat-checkbox>
+    </section>
+    <ng-container *ngFor="let validator of fld.validators" ngProjectAs="mat-error">
+      <mat-error *ngIf="group.get(fld.name).hasError(validator.name)">{{ validator.message }}</mat-error>
+    </ng-container>
+  </div>
+</ng-container>
+

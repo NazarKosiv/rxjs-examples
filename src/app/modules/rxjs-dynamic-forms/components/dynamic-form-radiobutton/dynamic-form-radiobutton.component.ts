@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IDynamicFormControlField } from '../../models/dynamic-form.models';
-import { FormGroup } from '@angular/forms';
+import { DynamicFormRadio } from '../../models/dynamic-form-radio.model';
+import { DynamicFormFieldBase } from '../../models/dymanic-form-field-base.model';
 
 @Component({
   selector: 'app-dynamic-form-radiobutton',
   templateUrl: './dynamic-form-radiobutton.component.html',
   styleUrls: ['./dynamic-form-radiobutton.component.scss']
 })
-export class DynamicFormRadiobuttonComponent implements OnInit {
-  field: IDynamicFormControlField;
-  group: FormGroup;
+export class DynamicFormRadiobuttonComponent extends DynamicFormFieldBase<DynamicFormRadio> implements OnInit {
+  constructor() {
+    super();
+  }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 }

@@ -5,11 +5,7 @@ export interface IDynamicFormCheckboxOptions extends IDynamicFormControlOptions 
 	value?: boolean;
 }
 
-export interface IDynamicFormCheckbox extends IDynamicFormCheckboxOptions {
-  create(): FormControl;
-}
-
-export class DynamicFormCheckbox extends DynamicFormControl implements IDynamicFormCheckbox {
+export class DynamicFormCheckbox extends DynamicFormControl {
 	public value: boolean;
 
   constructor(options: IDynamicFormCheckboxOptions) {

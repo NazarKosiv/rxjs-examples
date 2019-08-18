@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IDynamicFormControlField } from '../../models/dynamic-form.models';
-import { FormGroup } from '@angular/forms';
+import { DynamicFormDate } from '../../models/dynamic-form-date.model';
+import { DynamicFormFieldBase } from '../../models/dymanic-form-field-base.model';
 
 @Component({
   selector: 'app-dynamic-form-date',
   templateUrl: './dynamic-form-date.component.html',
   styleUrls: ['./dynamic-form-date.component.scss']
 })
-export class DynamicFormDateComponent implements OnInit {
-  field: IDynamicFormControlField;
-  group: FormGroup;
+export class DynamicFormDateComponent extends DynamicFormFieldBase<DynamicFormDate> implements OnInit {
+  constructor() {
+    super();
+  }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 }

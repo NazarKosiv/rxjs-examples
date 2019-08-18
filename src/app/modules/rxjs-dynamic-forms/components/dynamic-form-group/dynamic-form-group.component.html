@@ -1,6 +1,8 @@
-<div [formGroup]="group">
-  <div [formGroupName]="field.name">
-    <ng-container *ngFor="let f of field.controls" appDynamicFormField [field]="f" [group]="group.get(field.name)">
-    </ng-container>
+<ng-container *ngIf="field$ | async as fld">
+  <div [formGroup]="group">
+    <div [formGroupName]="fld.name">
+      <ng-container *ngFor="let f of fld.controls" appDynamicFormField [field]="f" [group]="group.get(fld.name)">
+      </ng-container>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RxjsDynamicFormsRoutingModule } from './rxjs-dynamic-forms-routing.module';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormButtonComponent } from './components/dynamic-form-button/dynamic-form-button.component';
 import { DynamicFormCheckboxComponent } from './components/dynamic-form-checkbox/dynamic-form-checkbox.component';
 import { DynamicFormDateComponent } from './components/dynamic-form-date/dynamic-form-date.component';
 import { DynamicFormInputComponent } from './components/dynamic-form-input/dynamic-form-input.component';
@@ -19,7 +18,6 @@ import { DynamicFormWrapperComponent } from './components/dynamic-form-wrapper/d
 @NgModule({
   declarations: [
     DynamicFormComponent,
-    DynamicFormButtonComponent,
     DynamicFormCheckboxComponent,
     DynamicFormDateComponent,
     DynamicFormInputComponent,
@@ -33,7 +31,6 @@ import { DynamicFormWrapperComponent } from './components/dynamic-form-wrapper/d
   imports: [CommonModule, RxjsDynamicFormsRoutingModule, ReactiveFormsModule, MaterialModule],
   entryComponents: [
     DynamicFormComponent,
-    DynamicFormButtonComponent,
     DynamicFormCheckboxComponent,
     DynamicFormDateComponent,
     DynamicFormInputComponent,

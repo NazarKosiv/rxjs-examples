@@ -1,9 +1,11 @@
-<mat-form-field class="demo-full-width margin-top" [formGroup]="group">
-  <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.label" />
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  <mat-hint></mat-hint>
-  <ng-container *ngFor="let validator of field.validators" ngProjectAs="mat-error">
-    <mat-error *ngIf="group.get(field.name).hasError(validator.name)">{{ validator.message }}</mat-error>
-  </ng-container>
-</mat-form-field>
+<ng-container *ngIf="field$ | async as fld">
+  <mat-form-field class="demo-full-width margin-top" [formGroup]="group">
+    <input matInput [matDatepicker]="picker" [formControlName]="fld.name" [placeholder]="fld.label" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-hint></mat-hint>
+    <ng-container *ngFor="let validator of fld.validators" ngProjectAs="mat-error">
+      <mat-error *ngIf="group.get(fld.name).hasError(validator.name)">{{ validator.message }}</mat-error>
+    </ng-container>
+  </mat-form-field>
+</ng-container>

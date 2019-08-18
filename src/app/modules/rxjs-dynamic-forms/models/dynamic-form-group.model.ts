@@ -1,17 +1,13 @@
 import { FormGroup } from '@angular/forms';
-import { IDynamicFormControl, DynamicFormControl, IDynamicFormControlOptions } from './dynamic-form-control.model';
+import { DynamicFormControl, IDynamicFormControlOptions } from './dynamic-form-control.model';
 import { IControl } from './dynamic-form.models';
 
 export interface IDynamicFormGroupOptions extends IDynamicFormControlOptions {
-  controls: IDynamicFormControl[];
+  controls: DynamicFormControl[];
 }
 
-export interface IDynamicFormGroup extends IDynamicFormGroupOptions {
-  create(): FormGroup;
-}
-
-export class DynamicFormGroup extends DynamicFormControl implements IDynamicFormGroup {
-  public controls: IDynamicFormControl[];
+export class DynamicFormGroup extends DynamicFormControl {
+  public controls: DynamicFormControl[];
 
   constructor(options: IDynamicFormGroupOptions) {
     super(options);
@@ -24,10 +20,8 @@ export class DynamicFormGroup extends DynamicFormControl implements IDynamicForm
 	
 	private createControls(): IControl {
 		return this.controls.reduce(
-      (acc: IControl, cur: IDynamicFormControl) => {
-        if (cur.name) {
-          acc[cur.name] = cur.create();
-        }
+      (acc: IControl, cur: DynamicFormControl) => {
+        acc[cur.name] = cur.create();
 
         return acc;
       },

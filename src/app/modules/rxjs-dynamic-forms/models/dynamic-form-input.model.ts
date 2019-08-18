@@ -6,11 +6,7 @@ export interface IDynamicFormInputOptions extends IDynamicFormControlOptions {
 	value?: string;
 }
 
-export interface IDynamicFormInput extends IDynamicFormInputOptions {
-  create(): FormControl;
-}
-
-export class DynamicFormInput extends DynamicFormControl implements IDynamicFormInput {
+export class DynamicFormInput extends DynamicFormControl {
   public inputType: string;
 	public value: string;
 

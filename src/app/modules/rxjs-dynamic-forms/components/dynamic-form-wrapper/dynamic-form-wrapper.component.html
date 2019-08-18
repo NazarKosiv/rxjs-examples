@@ -1,5 +1,7 @@
-<app-dynamic-form
-  [dynamicForm]="dynamicForm"
-  (formCreated)="onFormCreated($event)"
-  (submit)="onSubmit($event)">
-</app-dynamic-form>
+<form [formGroup]="formGroup" (submit)="onSubmit()">
+  <ng-container *ngFor="let field of dynamicForm.controls" appDynamicFormField [field]="field" [group]="formGroup">
+  </ng-container>
+  <div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">Save</button>
+  </div>
+</form>

@@ -1,16 +1,12 @@
 import { FormControl } from '@angular/forms';
-import { IDynamicFormControl, DynamicFormControl, IDynamicFormControlOptions } from './dynamic-form-control.model';
+import { DynamicFormControl, IDynamicFormControlOptions } from './dynamic-form-control.model';
 
 export interface IDynamicFormRadioOptions extends IDynamicFormControlOptions {
 	options: string[];
 	value?: string;
 }
 
-export interface IDynamicFormRadio extends IDynamicFormRadioOptions {
-  create(): FormControl;
-}
-
-export class DynamicFormRadio extends DynamicFormControl implements IDynamicFormRadio {
+export class DynamicFormRadio extends DynamicFormControl {
   public options: string[];
 	public value: string;
 

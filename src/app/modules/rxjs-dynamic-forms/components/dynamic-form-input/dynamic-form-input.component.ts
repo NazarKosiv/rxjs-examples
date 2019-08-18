@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IDynamicFormControlField } from '../../models/dynamic-form.models';
-import { FormGroup } from '@angular/forms';
+import { DynamicFormInput } from '../../models/dynamic-form-input.model';
+import { DynamicFormFieldBase } from '../../models/dymanic-form-field-base.model';
 
 @Component({
   selector: 'app-dynamic-form-input',
   templateUrl: './dynamic-form-input.component.html',
   styleUrls: ['./dynamic-form-input.component.scss']
 })
-export class DynamicFormInputComponent implements OnInit {
-  field: IDynamicFormControlField;
-  group: FormGroup;
+export class DynamicFormInputComponent extends DynamicFormFieldBase<DynamicFormInput> implements OnInit {
+  constructor() {
+    super();
+  }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 }

@@ -1,11 +1,8 @@
 import { Validators } from '@angular/forms';
-import { IDynamicFormControlField } from '../models/dynamic-form.models';
 import { minSelectedCheckboxes } from '../validators/min-selected-checkboxes.validator';
-import { IDynamicFormControl } from '../models/dynamic-form-control.model';
 import { DynamicFormCheckbox } from '../models/dynamic-form-checkbox.model';
 import { DynamicFormArray } from '../models/dynamic-form-array.model';
-import { DynamicFormButton } from '../models/dynamic-form-button.model';
-import { DynamicFormGroup, IDynamicFormGroup } from '../models/dynamic-form-group.model';
+import { DynamicFormGroup } from '../models/dynamic-form-group.model';
 import { DynamicFormInput } from '../models/dynamic-form-input.model';
 import { DynamicFormSelect } from '../models/dynamic-form-select.model';
 
@@ -16,11 +13,75 @@ export enum DYNAMIC_FORM_FIELD_TYPES {
   SELECT = 'select',
   CHECKBOX = 'checkbox',
   CHECKBOX_ARRAY = 'checkboxArray',
-  BUTTON = 'button',
   GROUP = 'group'
 }
 
-export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup({
+const uaCities: DynamicFormCheckbox[] = [
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'if',
+    label: 'Ivano-Frankivsk'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'lv',
+    label: 'Lviv'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'kv',
+    label: 'Kyiv'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'od',
+    label: 'Odessa'
+  })
+]
+
+const usCities: DynamicFormCheckbox[] = [
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'al',
+    label: 'Alabama'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'ny',
+    label: 'New York'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'la',
+    label: 'Los Angeles'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'tx',
+    label: 'Texas'
+  }),
+  new DynamicFormCheckbox({
+    value: false,
+    type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
+    name: 'fl',
+    label: 'Florida'
+  })
+]
+
+export const COUNTRY_CITIES: Map<string, DynamicFormCheckbox[]> = new Map([
+  ['Ukraine', uaCities],
+  ['US', usCities]
+]);
+
+export const favoriteCitiesFormConfig: DynamicFormGroup = new DynamicFormGroup({
   name: null,
   type: DYNAMIC_FORM_FIELD_TYPES.GROUP,
   controls: [
@@ -29,7 +90,7 @@ export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup(
       label: 'Country',
       name: 'country',
       value: 'Ukraine',
-      options: ['Ukraine', 'UK', 'US']
+      options: ['Ukraine', 'US']
     }),
     new DynamicFormArray({
       type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX_ARRAY,
@@ -39,30 +100,7 @@ export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup(
         { name: 'minChecked', validator: minSelectedCheckboxes(1), message: 'At least one city must be checked!' }
       ],
       controls: [
-        new DynamicFormCheckbox({
-          value: false,
-          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-          name: 'if',
-          label: 'Ivano-Frankivsk'
-        }),
-        new DynamicFormCheckbox({
-          value: false,
-          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-          name: 'lv',
-          label: 'Lviv'
-        }),
-        new DynamicFormCheckbox({
-          value: false,
-          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-          name: 'pg',
-          label: 'Prague'
-        }),
-        new DynamicFormCheckbox({
-          value: false,
-          type: DYNAMIC_FORM_FIELD_TYPES.CHECKBOX,
-          name: 'ld',
-          label: 'London'
-        })
+        ...COUNTRY_CITIES.get('Ukraine')
       ]
     }),
     new DynamicFormInput({
@@ -105,15 +143,11 @@ export const favoriteCitiesFormConfig: IDynamicFormGroup = new DynamicFormGroup(
           ]
         })
       ]
-    }),
-    new DynamicFormButton({
-      type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
-      label: 'Save'
     })
   ]
 });
 
-export const surveyFormConfig: Array<IDynamicFormControlField> = [
+export const surveyFormConfig: any[] = [
   {
     type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Username',
@@ -192,14 +226,10 @@ export const surveyFormConfig: Array<IDynamicFormControlField> = [
         label: 'Peter Dinklage'
       }
     ]
-  },
-  {
-    type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
-    label: 'Save'
   }
 ];
 
-export const registrationFormConfig: Array<IDynamicFormControlField> = [
+export const registrationFormConfig: any[] = [
   {
     type: DYNAMIC_FORM_FIELD_TYPES.INPUT,
     label: 'Username',
@@ -296,9 +326,5 @@ export const registrationFormConfig: Array<IDynamicFormControlField> = [
     label: 'Accept Terms',
     name: 'term',
     value: true
-  },
-  {
-    type: DYNAMIC_FORM_FIELD_TYPES.BUTTON,
-    label: 'Save'
   }
 ];

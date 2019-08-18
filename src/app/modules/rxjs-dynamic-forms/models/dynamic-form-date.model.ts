@@ -5,11 +5,7 @@ export interface IDynamicFormDateOptions extends IDynamicFormControlOptions {
 	value?: string;
 }
 
-export interface IDynamicFormDate extends IDynamicFormDateOptions {
-  create(): FormControl;
-}
-
-export class DynamicFormDate extends DynamicFormControl implements IDynamicFormDate {
+export class DynamicFormDate extends DynamicFormControl {
 	public value: string;
 
   constructor(options: IDynamicFormDateOptions) {

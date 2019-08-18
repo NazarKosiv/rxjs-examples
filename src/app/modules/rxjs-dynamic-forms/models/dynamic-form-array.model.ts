@@ -1,19 +1,15 @@
 import { FormArray } from '@angular/forms';
 
-import { IDynamicFormControlField, IValidator } from './dynamic-form.models';
-import { DynamicFormControl, IDynamicFormControlOptions, IDynamicFormControl } from './dynamic-form-control.model';
+import { IValidator } from './dynamic-form.models';
+import { DynamicFormControl, IDynamicFormControlOptions } from './dynamic-form-control.model';
 
 export interface IDynamicFormArrayOptions extends IDynamicFormControlOptions {
-  controls: IDynamicFormControlField[];
+  controls: DynamicFormControl[];
   validators: IValidator[];
 }
 
-export interface IDynamicFormArray extends IDynamicFormArrayOptions {
-  create(): FormArray;
-}
-
-export class DynamicFormArray extends DynamicFormControl implements IDynamicFormArray {
-  public controls: IDynamicFormControlField[];
+export class DynamicFormArray extends DynamicFormControl {
+  public controls: DynamicFormControl[];
   public validators: IValidator[];
 
   constructor(options: IDynamicFormArrayOptions) {
@@ -24,7 +20,7 @@ export class DynamicFormArray extends DynamicFormControl implements IDynamicForm
 
   public create(): FormArray {
 		const formArray: FormArray = new FormArray([], this.createValidators());
-			this.controls.forEach((formField: IDynamicFormControl) =>
+			this.controls.forEach((formField: DynamicFormControl) =>
 			formArray.push(formField.create())
 		);
     return formArray;
