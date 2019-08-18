@@ -15,4 +15,19 @@ export class DynamicFormSelectComponent extends DynamicFormFieldBase<DynamicForm
   ngOnInit() {
     super.ngOnInit();
   }
+
+  public changeField(field: DynamicFormSelect): void {
+    this.fieldMsgSrc$.next(field);
+    this.updateSelect();
+  }
+
+  private updateSelect(): void {
+    if (this.group) {
+      const selectControlRef = this.group.get(this.field.name);
+      const value = selectControlRef.value;
+      if (!this.field.options.includes(value)) {
+        selectControlRef.patchValue(this.field.options[0]);
+      }
+    }
+  }
 }

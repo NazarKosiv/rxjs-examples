@@ -5,7 +5,7 @@ import { DynamicFormSelect } from '../../models/dynamic-form-select.model';
 import { IDynamicFormControlConfig } from '../../models/dynamic-form-control.model';
 import { DynamicFormArray } from '../../models/dynamic-form-array.model';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form-wrapper',
@@ -24,7 +24,12 @@ export class DynamicFormWrapperComponent implements OnInit, OnDestroy {
     const citiesRef = this.dynamicForm.controls.find((control) => control.name === 'cities') as DynamicFormArray;
     countryRef.addHooksDynamically({
       onInit: (config: IDynamicFormControlConfig) => {
-        
+        timer(10000).subscribe(() => {
+          config.changeField({
+            ...config.field,
+            options: ['Ukraine', 'UK', 'CA']
+          })
+        })
       }
     });
     citiesRef.addHooksDynamically({
@@ -51,11 +56,5 @@ export class DynamicFormWrapperComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     const { value } = this.formGroup;
     console.log({value});
-  }
-
-  private startWatchingFieldsChanges(): void {
-    this.formGroup.get('country').valueChanges.subscribe((countryChanged) => {
-      console.log({countryChanged});
-    })
   }
 }

@@ -26,7 +26,7 @@ export class DynamicFormArrayCheckboxComponent extends DynamicFormFieldBase<Dyna
 
   private updateControls(): void {
     if (this.group) {
-      const formArrayRef = (this.group.get(this.field.name) as FormArray);
+      const formArrayRef = this.group.get(this.field.name) as FormArray;
       while (formArrayRef.length > 0) {
         formArrayRef.removeAt(0);
       }
